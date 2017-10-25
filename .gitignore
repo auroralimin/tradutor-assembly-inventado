@@ -1,0 +1,38 @@
+# Dependencias
+*.d
+
+# Objetos compilador
+*.slo
+*.lo
+*.o
+*.obj
+
+# Cabeçalhos pre-compliados
+*.gch
+*.pch
+
+# Bibliotecas dinâmicas compiladas
+*.so
+*.dylib
+*.dll
+
+# Bibliotecas estáticas compiladas
+*.lai
+*.la
+*.a
+*.lib
+
+# Executaveis
+*.exe
+*.out
+*.app
+montador
+
+# Arquivos gerados
+*.cxx
+*.hxx
+*.hh
+
+# Dcoumentação gerada
+doc/
+
