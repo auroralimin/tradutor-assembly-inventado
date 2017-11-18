@@ -70,17 +70,40 @@ namespace sb {
             void solveRef();
 
             /**
-             * @brief Salva o endereço de um rótulo e informações relacionadas
+             * @brief Método que salva o endereço de um rótulo e informações\
+             * relacionadas
              *
-             * @param label é um srd::string contendo o nome do rótulo
+             * @param label é um std::string contendo o nome do rótulo
              * @param dec é um int contendo um offset negativo para o endereço\
              *        do rótulo
              */
             void insertLabel(std::string label, int dec);
 
+            /**
+             * @brief Método que insere rótulo EQU
+             *
+             * @param label é um std::string contendo o nome do rótulo
+             * @param value é um int contendo o valor do EQU
+             */
+            void insertEqu(std::string label, int value);
+
+            /**
+             * @brief Método que retorna o valor numérico de um EQU dado o seu\
+             * rótulo
+             *
+             * @param label é um std::string contendo o nome do rótulo
+             *
+             * @retval num < em todos os casos retorna o valor do EQU\
+             * (assume-se que todos os EQU foram declarados previamente,\
+             * sem erros)
+             */
+            int getEqu(std::string label);
+
             int addr; /**<  contador de endereços do montador */ 
             std::vector<int> assembly 
-            /**< contém os valores após a montagem*/;
+                /**< contém os valores após a montagem*/;
+            std::map<std::string, int> equMap;
+            /**< contém os valores equ relacionados aos seus rótulos*/;
             std::map<std::string, int> labelMap;
             /**< contém  informações a respeito de rótulos */
             std::map<std::string, std::vector<int> > refMap;

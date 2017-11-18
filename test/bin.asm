@@ -1,11 +1,20 @@
+; declaracao de EQU
+LABEL: EQU 1
+LABEL1: EQU -1
+
 SECTION TEXT
-INPUT OLD_DATA
+INPUT      OLD_DATA
 LOAD OLD_DATA
 L1: DIV DOIS
+
+
 STORE  NEW_DATA
 MULT DOIS
+IF LABEL ;EQU VERDADEITO 
 STORE TMP_DATA
 LOAD OLD_DATA
+IF LABEL1 ; EQU FALSO
+SUB TMP_DATA
 SUB TMP_DATA
 STORE TMP_DATA
 OUTPUT TMP_DATA
@@ -13,85 +22,10 @@ COPY NEW_DATA, OLD_DATA
 LOAD OLD_DATA
 JMPP L1
 STOP
-SECTION DATA
+SECTION        DATA
 DOIS: CONST 2
-OLD_DATA: SPACE
+    OLD_DATA: SPACE
 NEW_DATA: SPACE
+
+
 TMP_DATA: SPACE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

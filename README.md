@@ -50,6 +50,12 @@ Esta linguagem e formada por um conjunto de apenas 14 instruções.
                                                                         armazenamento de uma constante
                                                                         inteira de 16 bits em base
                                                                         decimal ou hexadecimal         </td></tr>
+  <tr><td>    EQU     </td><td>     1     </td><td>     0    </td><td>  Cria um sinônimo textual
+                                                                        para um símbolo                </td></tr>
+  <tr><td>    IF      </td><td>     1     </td><td>     0    </td><td>  Instrue  o  montador  a 
+                                                                        incluir  a linha seguinte do
+                                                                        codigo somente se o valor do
+                                                                        operando for 1                 </td></tr>
   <tr><td>    BEGIN   </td><td>     0     </td><td>     0    </td><td>  Início de um módulo            </td></tr>
   <tr><td>     END    </td><td>     0     </td><td>     0    </td><td>  Fim de um módulo               </td></tr>
 </table>
@@ -58,7 +64,7 @@ Esta linguagem e formada por um conjunto de apenas 14 instruções.
 
 ### Montador
 
-Deve-se implementar um montador do assembly inventado descrito acima que já assume pré-processamento (não há tratamento de macros).
+Deve-se implementar um montador do assembly inventado descrito acima (não há tratamento de macros).
 
 Além disso, o mesmo deve receber de 1 a 3 programas de entrada (ex.:  ./montador prog1.asm prog2.asm prog3.asm).
 Assim, se um unico programa foi passado como entrada então o mesmo não deve ter as diretivas BEGIN e END.

@@ -22,6 +22,8 @@
    
     #undef yylex
     #define yylex scanner.yylex
+
+    bool validLine = true;
 }
 
 /******************************************************************************/
@@ -45,6 +47,8 @@
 %token               SECTION
 %token               SPACE
 %token               CONST
+%token               EQU
+%token               IF
 
 %token <std::string> LABEL
 %token <std::string> NAME
@@ -77,8 +81,23 @@ one_pass
     ;
 
 line
-    : label   end_line { driver.insertLabel($1.first, $1.second); }
+    : equ end_line
+    | if end_line
+    | label   end_line { driver.insertLabel($1.first, $1.second); }
     | command end_line 
+    ;
+
+equ
+    : LABEL EQU NUM          { driver.insertEqu($1, $3); }
+    | LABEL end_line EQU NUM { driver.insertEqu($1, $4); }
+    ;
+
+if
+    : IF NAME {
+          if (driver.getEqu($2) != 1) {
+              validLine = false;
+          }
+      }
     ;
 
 label
@@ -93,22 +112,34 @@ command
    
 instruction
     : inst_name {
-          $$ = 1;
-          driver.assembler($1);
+          if (validLine) {
+              $$ = 1;
+              driver.assembler($1);
+          } else {
+              validLine = true;
+          }
       }
     | inst_name addr {
-          $$ = 2;
-          driver.assembler($1);
-          driver.insertRef($2.first);
-          driver.assembler($2.second);
+          if (validLine) {
+              $$ = 2;
+              driver.assembler($1);
+              driver.insertRef($2.first);
+              driver.assembler($2.second);
+          } else {
+              validLine = true;
+          }
       }
     | COPY addr COMMA addr {
-          $$ = 3;
-          driver.assembler(9);
-          driver.insertRef($2.first);
-          driver.assembler($2.second);
-          driver.insertRef($4.first);
-          driver.assembler($4.second);
+          if (validLine) {
+              $$ = 3;
+              driver.assembler(9);
+              driver.insertRef($2.first);
+              driver.assembler($2.second);
+              driver.insertRef($4.first);
+              driver.assembler($4.second);
+          } else {
+              validLine = true;
+          }
       }
     ;
 
@@ -118,19 +149,19 @@ addr
     ;
 
 inst_name
-    : ADD     { $$ = 1;  }
-    | SUB     { $$ = 2;  }
-    | MULT    { $$ = 3;  }
-    | DIV     { $$ = 4;  }
-    | JMP     { $$ = 5;  }
-    | JMPN    { $$ = 6;  }
-    | JMPP    { $$ = 7;  }
-    | JMPZ    { $$ = 8;  }
-    | LOAD    { $$ = 10; }
-    | STORE   { $$ = 11; }
-    | INPUT   { $$ = 12; }
-    | OUTPUT  { $$ = 13; }
-    | STOP    { $$ = 14; }
+    : ADD    { $$ = 1;  }
+    | SUB    { $$ = 2;  }
+    | MULT   { $$ = 3;  }
+    | DIV    { $$ = 4;  }
+    | JMP    { $$ = 5;  }
+    | JMPN   { $$ = 6;  }
+    | JMPP   { $$ = 7;  }
+    | JMPZ   { $$ = 8;  }
+    | LOAD   { $$ = 10; }
+    | STORE  { $$ = 11; }
+    | INPUT  { $$ = 12; }
+    | OUTPUT { $$ = 13; }
+    | STOP   { $$ = 14; }
     ;
 
 directive

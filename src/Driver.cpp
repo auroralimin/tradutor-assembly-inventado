@@ -14,7 +14,7 @@ void sb::Driver::onePassProcess(std::istream &srcStream, std::string dst) {
         std::cerr << "Erro imprevisto na montagem." << std::endl;
         exit(EXIT_FAILURE);
     }
-    
+   
     solveRef();
     writeBin(dst);
 }
@@ -28,7 +28,6 @@ void sb::Driver::writeBin(std::string dst) {
     out << std::endl;
     out.close();
 }
-
 
 void sb::Driver::insertRef(std::string label) {
     if (DEBUG) {
@@ -62,5 +61,14 @@ void sb::Driver::insertLabel(std::string label, int dec) {
         std::cout << "Insere Label: " << label << " " << addr-dec << std::endl;
     }
     labelMap[label] = addr - dec;
+}
+
+void sb::Driver::insertEqu(std::string label, int value) {
+    equMap[label] = value;
+}
+
+int sb::Driver::getEqu(std::string label) {
+    std::map<std::string, int>::iterator it = equMap.find(label);
+    return it->second;
 }
 
