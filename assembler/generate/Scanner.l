@@ -5,7 +5,6 @@
     #include "Parser.hxx"
 
     using token = asblr::Parser::token;
-    int yycolumn = 1;
 
     #undef  YY_DECL
     #define YY_DECL int asblr::Scanner::yylex(\

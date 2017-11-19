@@ -206,7 +206,7 @@ inst_name
     | LOAD   { $$ = 10; }
     | STORE  { $$ = 11; }
     | INPUT  { $$ = 12; }
-    | OUTPUT { $$ = 13; }
+		| OUTPUT { $$ = 13; }
     | STOP   { $$ = 14; }
     ;
 

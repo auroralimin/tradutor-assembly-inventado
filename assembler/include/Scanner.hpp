@@ -1,5 +1,5 @@
-#ifndef SB_PRE_SCANNER_HPP
-#define SB_PRE_SCANNER_HPP
+#ifndef ASBLR_PRE_SCANNER_HPP
+#define ASBLR_PRE_SCANNER_HPP
 
 #if ! defined(yyFlexLexerOnce)
 #include <FlexLexer.h>

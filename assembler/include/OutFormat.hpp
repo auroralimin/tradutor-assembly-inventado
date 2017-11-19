@@ -1,8 +1,8 @@
 /**
  * @file
  */
-#ifndef SB_OUT_FORMAT_HPP
-#define SB_OUT_FORMAT_HPP
+#ifndef ASBLR_OUT_FORMAT_HPP
+#define ASBLR_OUT_FORMAT_HPP
 
 /**
  * @def DEBUG

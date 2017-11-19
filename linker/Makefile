@@ -35,7 +35,7 @@ PARSER = Parser.y
 
 # Nome do executável final
 # MODIFIQUE AQUI NOMEANDO COM SEU NOME E MATRÍCULA
-EXEC = montador
+EXEC = ligador
 
 # Regra default:
 all:
