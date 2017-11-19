@@ -11,8 +11,7 @@
     #define YY_DECL int sb::Scanner::yylex(\
                             sb::Parser::semantic_type *const lval,\
                             sb::Parser::location_type *location)
-    #define yyterminate()   static int once = 0;\
-                            return once++ ? token::ENDL : token::END;
+    #define yyterminate() return( token::END )
     #define YY_NO_UNISTD_H
     #define YY_USER_ACTION location->step(); location->columns(yyleng);
 %}
@@ -50,7 +49,9 @@ SECTION                     { return token::SECTION; }
 SPACE                       { return token::SPACE;   }
 CONST                       { return token::CONST;   }
 EQU                         { return token::EQU;     }
-IF                          { return token::IF;     }
+IF                          { return token::IF;      }
+BEGIN                       { return token::BEGINC;  }
+END                         { return token::ENDC;    }
 [+-]*0x[0-9a-fA-F]+[ \n\t,] { return hexNum(yytext); }
 [+-]*[0-9]+[ \n\t,]         { return decNum(yytext); }
 [a-z_]+[a-z0-9_]*:          { return label(yytext);  }

@@ -49,6 +49,8 @@
 %token               CONST
 %token               EQU
 %token               IF
+%token               BEGINC
+%token               ENDC
 
 %token <std::string> LABEL
 %token <std::string> NAME
@@ -73,10 +75,39 @@
 
 %%
 
-one_pass
-    : line     one_pass
+module
+    : begin_code code end
+    | end_line begin_code code end
+    | code {
+           if (!driver.isUnique()) {
+              driver.printParseError("Se 2 ou 3 programas sao definidos pelo "\
+                                     "usuário como entrada entao as diretivas "\
+                                     "BEGIN e END são obrigatorias.");
+             exit(EXIT_FAILURE);
+          }
+      }
+    ;
+
+begin_code
+    : LABEL BEGINC end_line {
+          if (driver.isUnique()) {
+              driver.printParseError("Se um ́unico programa foi colocado o "\
+                                     "mesmo NÃO deve ter as diretivas "\
+                                     "BEGIN e END.");
+             exit(EXIT_FAILURE);
+          }
+      }
+    ;
+
+end
+    : ENDC
+    | ENDC end_line
+    ;
+
+code
+    : line     code
     | line
-    | end_line one_pass
+    | end_line code
     | end_line
     ;
 
@@ -144,8 +175,9 @@ instruction
     ;
 
 addr
-    : NAME PLUS NUM { $$ = std::make_pair($1, $3); }
-    | NAME          { $$ = std::make_pair($1,  0); }
+    : NAME PLUS NUM  { $$ = std::make_pair($1, $3); }
+    | NAME PLUS NAME { $$ = std::make_pair($1, driver.getEqu($3)); }
+    | NAME           { $$ = std::make_pair($1,  0); }
     ;
 
 inst_name

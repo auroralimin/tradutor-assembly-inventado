@@ -19,35 +19,49 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    std::string src(argv[1]), asmStr = ".asm";
-    if (src.rfind(asmStr) != (src.size() - asmStr.size())) {
-        std::cerr << "É necessário que o programa de entrada "
-                  << "tenha a extensão .asm" << std::endl;
-        return EXIT_FAILURE;
-    }
+    for (int i = 1; i < argc; i++) {
+        sb::Driver *driver = new sb::Driver();
+        std::string src, asmStr = ".asm";
+        src = argv[i];
 
-    std::string dst = src;
-    while (dst.find("/") != std::string::npos) {
-        dst = dst.substr(dst.find("/") + 1, dst.size());
-    }
-    dst = dst.substr(0, dst.find(".")) + ".o";
+        //confere se é um arquivo asm de entrada
+        if (src.rfind(asmStr) != (src.size() - asmStr.size())) {
+            std::cerr << "É necessário que o programa de entrada "
+                      << "tenha a extensão .asm" << std::endl;
+            return EXIT_FAILURE;
+        }
 
-    std::ifstream stream(src);
-    if (!stream.good()) {
-        std::cerr << "Não foi possível abrir o arquivo:" << src
-                  << "." << std::endl;
-        exit(EXIT_FAILURE);
-    }
+        //retira o caminho e substitui a extensão do arquivo de destino para .o
+        std::string dst = src;
+        while (dst.find("/") != std::string::npos) {
+            dst = dst.substr(dst.find("/") + 1, dst.size());
+        }
+        dst = dst.substr(0, dst.find(".")) + ".o";
 
-    if (DEBUG) {
-        std::cout << "OnePass src = " << src << ", OnePass dst = "
-                  << dst << std::endl << std::endl;
-    }
-    sb::Driver *driver = new sb::Driver();
-    driver->onePassProcess(stream, dst);
+        //checa se o arquivo de entrada pode ser aberto e lido
+        std::ifstream stream;
+        stream.open(src);
+        if (!stream.good()) {
+            std::cerr << "Não foi possível abrir o arquivo:" << src
+                      << "." << std::endl;
+            return EXIT_FAILURE;
+        }
 
-    stream.close();
-    delete driver;
+        //monta arquivo
+        if (DEBUG) {
+            const std::string magenta = COLOR(sb::color::magenta);
+            std::cout << magenta << "Main: " << OFF;
+            std::cout << "OnePass src = " << src << ", OnePass dst = "
+                      << dst << std::endl;
+        }
+        driver->onePassProcess(stream, argc == 2, src, dst);
+        if (DEBUG) {
+            std::cout << std::endl;
+        }
+
+        stream.close();
+        delete driver;
+    }
 
     return EXIT_SUCCESS;
 }

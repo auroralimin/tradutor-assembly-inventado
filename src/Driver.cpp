@@ -4,12 +4,23 @@
 
 #include "OutFormat.hpp"
 
-void sb::Driver::onePassProcess(std::istream &srcStream, std::string dst) {
+sb::Driver::~Driver() {
+    addr = 0;
+    assembly.clear();
+    equMap.clear();
+    labelMap.clear();
+    refMap.clear();
+}
+
+void sb::Driver::onePassProcess(std::istream &srcStream, bool unique,
+                                std::string src, std::string dst) {
     sb::Scanner *scanner = new sb::Scanner(&srcStream);
     sb::Parser *parser = new sb::Parser(*scanner, *this);
 
     addr = 0;
-    const int accept(0);
+    this->unique = unique;
+    this->src = src;
+    const int accept = 0;
     if (parser->parse() != accept) {
         std::cerr << "Erro imprevisto na montagem." << std::endl;
         exit(EXIT_FAILURE);
@@ -17,6 +28,9 @@ void sb::Driver::onePassProcess(std::istream &srcStream, std::string dst) {
    
     solveRef();
     writeBin(dst);
+
+    delete parser;
+    delete scanner;
 }
 
 void sb::Driver::writeBin(std::string dst) {
@@ -70,5 +84,16 @@ void sb::Driver::insertEqu(std::string label, int value) {
 int sb::Driver::getEqu(std::string label) {
     std::map<std::string, int>::iterator it = equMap.find(label);
     return it->second;
+}
+
+bool sb::Driver::isUnique() {
+    return unique;
+}
+
+void sb::Driver::printParseError(std::string msg) {
+    const std::string red = COLOR(sb::color::red);
+    std::cout << red << "Erro: " << OFF;
+    std::cout << BOLD << src << ": " << OFF;
+    std::cout << msg << std::endl;
 }
 

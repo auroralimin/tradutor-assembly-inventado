@@ -11,7 +11,7 @@ echo "---------------------------------------------"
 for file in ${testdir}/*.asm; do
     name=`basename ${file} .asm`".o"
     echo "${BOLD}Montando ${name}:${OFF}"
-    ./montador $file ${name}
+    ./montador $file
     if diff ${name} ${resultdir}/${name} 
     then
         echo "${GREEN}>>>> OK ${OFF}"

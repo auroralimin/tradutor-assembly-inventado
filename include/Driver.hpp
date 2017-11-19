@@ -18,9 +18,9 @@ namespace sb {
     class Driver {
         public:
             /**
-             * @brief Destrutor virtual da classe
+             * @brief Método destrutor da classe
              */
-            virtual ~Driver() {};
+            ~Driver();
 
             /**
              * @brief Método que realiza a montagem de um código pré-processado
@@ -29,8 +29,11 @@ namespace sb {
              *        com o código pré-processado
              * @param dst é um std::string contendo o nome do arquivo ao qual\
              *        o binátio montado será salvo
+             * @param unique é um bool que infoma caso o arquivo sendo montado\
+             * seja único ou parte de um projeto
              */
-            void onePassProcess(std::istream &srcStream, std::string dst);
+            void onePassProcess(std::istream &srcStream, bool unique,
+                                std::string src, std::string dst);
 
             /**
              * @brief Injeção de amizade com a classe sb::Parser
@@ -99,7 +102,22 @@ namespace sb {
              */
             int getEqu(std::string label);
 
-            int addr; /**<  contador de endereços do montador */ 
+            /**
+             * @brief Método que retorna se um módulo é único
+             *
+             * @retval true  < se o módulo for único
+             * @retval false < se o módulo não for único
+             */
+            bool isUnique();
+
+            /**
+             * @brief Imprime um erro de montagem no parser
+             */
+            void printParseError(std::string msg);
+
+            int addr;    /**< contador de endereços do montador */ 
+            bool unique; /**< informa se o módulo é único ou não */ 
+            std::string src; /**< nome do arquivo fonte */ 
             std::vector<int> assembly 
                 /**< contém os valores após a montagem*/;
             std::map<std::string, int> equMap;
