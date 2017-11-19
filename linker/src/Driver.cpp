@@ -17,7 +17,7 @@ void lnkr::Driver::linker(std::vector<std::string> objs,
 		parseObj(src, stream);
 		stream.close();
 	}
-	//TODO: solveUses();
+	solveUses();
 	writeExec(dst);
 }
 
@@ -38,6 +38,10 @@ void lnkr::Driver::parseObj(std::string src, std::istream &srcStream) {
 	delete scanner;
 }
 
+void lnkr::Driver::solveUses() {
+    //TODO: implementar resolução de usos
+}
+
 void lnkr::Driver::writeExec(std::string dst) {
 	std::cout << "realloc info:" << std::endl;
 	for (auto r : rllcInfo)
@@ -49,10 +53,13 @@ void lnkr::Driver::writeExec(std::string dst) {
 		std::cout << c << "  ";
 	}
 	std::cout << std::endl;
+
+    //TODO: escrever executável
+    (void) dst;
 }
 
 void lnkr::Driver::insertUse(std::string label, std::vector<int> uses) {
-	for (int i; i < uses.size(); i++)
+	for (unsigned long i = 0; i < uses.size(); i++)
 		uses[i] += begin;
 
 	useTable[label] = uses;

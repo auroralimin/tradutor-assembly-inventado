@@ -137,11 +137,17 @@ Caso contrario, o carregador deve modificar a informação relativa para os ende
 
 ## Dependências
 
+### Bison e Flex
+
 Esse projeto depende do Bison e do Flex. O uso de ambos foi autorizado pelo professor da disciplina e ambos geralmente já vem incluídos nos pacotes de utilitários essenciais (build essentials).
 
 Ressalta-se a necessidade do Bison com versão 3.o ou superior e do Flex com versão 2.5 ou superior. Por serem utilitários GNU padrões, se necessário é possível atualizar ambos de forma padrão (com apt-get em distribuições Ubuntu, por exemplo).
 
 Observa-se que os códigos gerados pelo Bison e pelo Flex não são tão legíveis como os códigos feitos a mão. Desta forma, para melhor entendimento dos arquivos scanner e parser recomenda-se analisar os arquivos do diretório generate (são eles que definem as regras para geração dos códigos Flex e Bison).
+
+### GCC
+
+Esse projeto necessita do compilador GCC na versão 5.x ou maior.
 
 ## Diretrizes do projeto
 

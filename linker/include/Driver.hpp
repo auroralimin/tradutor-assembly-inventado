@@ -54,6 +54,11 @@ namespace lnkr {
 			 *        objeto
 			 */
 			void parseObj(std::string src, std::istream &srcStream);
+        
+            /**
+			 * @brief Resolve usos de variáveis externas
+			 */
+            void solveUses();
 
 			/**
 			 * @brief Método que escreve o executável em um arquivo

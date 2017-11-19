@@ -59,7 +59,6 @@ PUBLIC                      { return token::PUBLIC;  }
 [a-z_]+[a-z0-9_]*           { return name(yytext);   }
 ;.*   ;
 [ \t] ;
-.     ;
 %%
 
 int asblr::Scanner::decNum(std::string str) {
