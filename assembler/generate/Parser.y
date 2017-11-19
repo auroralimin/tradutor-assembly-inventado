@@ -206,7 +206,7 @@ inst_name
     | LOAD   { $$ = 10; }
     | STORE  { $$ = 11; }
     | INPUT  { $$ = 12; }
-		| OUTPUT { $$ = 13; }
+	| OUTPUT { $$ = 13; }
     | STOP   { $$ = 14; }
     ;
 
@@ -214,15 +214,15 @@ directive
     : SECTION NAME {
           $$ = 0;
       }
-    | SPACE {
-          $$ = 1;
-          driver.assembler(0, true);
-      }
     | SPACE NUM {
           $$ = $2;
           for (int i = 0; i < $2; i++) driver.assembler(0, true);
       }
-    | CONST NUM {
+    | SPACE {
+          $$ = 1;
+          driver.assembler(0, true);
+      }
+   | CONST NUM {
           $$ = 1;
           driver.assembler($2, true);
       }

@@ -27,51 +27,50 @@
 %{
     yylval = lval;
 %}
-\n                          { return token::ENDL;    }
-,                           { return token::COMMA;   }
-\+[ \t]                     { return token::PLUS;    }
-ADD                         { return token::ADD;     }
-SUB                         { return token::SUB;     }
-MULT                        { return token::MULT;    }
-DIV                         { return token::DIV;     }
-JMP                         { return token::JMP;     }
-JMPP                        { return token::JMPP;    }
-JMPN                        { return token::JMPN;    }
-JMPZ                        { return token::JMPZ;    }
-COPY                        { return token::COPY;    }
-LOAD                        { return token::LOAD;    }
-STORE                       { return token::STORE;   }
-INPUT                       { return token::INPUT;   }
-OUTPUT                      { return token::OUTPUT;  }
-STOP                        { return token::STOP;    }
-SECTION                     { return token::SECTION; }
-SPACE                       { return token::SPACE;   }
-CONST                       { return token::CONST;   }
-EQU                         { return token::EQU;     }
-IF                          { return token::IF;      }
-BEGIN                       { return token::BEGINC;  }
-END                         { return token::ENDC;    }
-EXTERN                      { return token::EXTERN;  }
-PUBLIC                      { return token::PUBLIC;  }
-[+-]*0x[0-9a-fA-F]+[ \n\t,] { return hexNum(yytext); }
-[+-]*[0-9]+[ \n\t,]         { return decNum(yytext); }
-[a-z_]+[a-z0-9_]*:          { return label(yytext);  }
-[a-z_]+[a-z0-9_]*           { return name(yytext);   }
+\n                  { return token::ENDL;    }
+,                   { return token::COMMA;   }
+\+[ \t]             { return token::PLUS;    }
+ADD                 { return token::ADD;     }
+SUB                 { return token::SUB;     }
+MULT                { return token::MULT;    }
+DIV                 { return token::DIV;     }
+JMP                 { return token::JMP;     }
+JMPP                { return token::JMPP;    }
+JMPN                { return token::JMPN;    }
+JMPZ                { return token::JMPZ;    }
+COPY                { return token::COPY;    }
+LOAD                { return token::LOAD;    }
+STORE               { return token::STORE;   }
+INPUT               { return token::INPUT;   }
+OUTPUT              { return token::OUTPUT;  }
+STOP                { return token::STOP;    }
+SECTION             { return token::SECTION; }
+SPACE               { return token::SPACE;   }
+CONST               { return token::CONST;   }
+EQU                 { return token::EQU;     }
+IF                  { return token::IF;      }
+BEGIN               { return token::BEGINC;  }
+END                 { return token::ENDC;    }
+EXTERN              { return token::EXTERN;  }
+PUBLIC              { return token::PUBLIC;  }
+[+-]*0x[0-9a-fA-F]+ { return hexNum(yytext); }
+[+-]*[0-9]+         { return decNum(yytext); }
+[a-z_]+[a-z0-9_]*:  { return label(yytext);  }
+[a-z_]+[a-z0-9_]*   { return name(yytext);   }
 ;.*   ;
 [ \t] ;
+.     ;
 %%
 
 int asblr::Scanner::decNum(std::string str) {
-    yyless(str.length() - 1);
-    int num = std::stoi(yytext);
+    int num = std::stoi(str);
     yylval->build<int>(num);
 
     return token::NUM;
 }
 
 int asblr::Scanner::hexNum(std::string str) {
-    yyless(str.length() - 1);
-    int num = std::stoi(yytext, 0, 16);
+    int num = std::stoi(str, 0, 16);
     yylval->build<int>(num);
 
     return token::NUM;
