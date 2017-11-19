@@ -2,12 +2,12 @@
 %require  "3.0"
 %debug
 %defines
-%define api.namespace {sb}
+%define api.namespace {asblr}
 %define parser_class_name {Parser}
 %define api.value.type variant
 
 %code requires {
-     namespace sb {
+     namespace asblr {
         class Driver;
         class Scanner;
     }
@@ -235,7 +235,7 @@ end_line
 
 %%
 
-void sb::Parser::error(const location_type &l, const std::string &errMsg) {
+void asblr::Parser::error(const location_type &l, const std::string &errMsg) {
     UNUSED_VAR l;
     UNUSED_VAR errMsg;
 }

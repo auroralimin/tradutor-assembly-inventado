@@ -8,7 +8,7 @@
 #include "Parser.hxx"
 #include "location.hh"
 
-namespace sb {
+namespace asblr {
     /**
      * @brief Classe responisável pelo scanner do montador
      * Essa classe utiliza-se de recursos do Flex (por vezes redefinindo-os)
@@ -33,8 +33,8 @@ namespace sb {
             /**
              * @brief Redefinição de yylex
              */
-            virtual int yylex(sb::Parser::semantic_type * const lval,
-                              sb::Parser::location_type *location);
+            virtual int yylex(asblr::Parser::semantic_type * const lval,
+                              asblr::Parser::location_type *location);
 
         private:
             /**
@@ -65,7 +65,7 @@ namespace sb {
              */
             int name(std::string str);
 
-            sb::Parser::semantic_type *yylval = nullptr;
+            asblr::Parser::semantic_type *yylval = nullptr;
             /**< salva informações do token */
     };
 }

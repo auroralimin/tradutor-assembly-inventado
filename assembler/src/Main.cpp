@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     }
 
     for (int i = 1; i < argc; i++) {
-        sb::Driver *driver = new sb::Driver();
+        asblr::Driver *driver = new asblr::Driver();
         std::string src, asmStr = ".asm";
         src = argv[i];
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
 
         //monta arquivo
         if (DEBUG) {
-            const std::string magenta = COLOR(sb::color::magenta);
+            const std::string magenta = COLOR(asblr::color::magenta);
             std::cout << magenta << "Main: " << OFF;
             std::cout << "OnePass src = " << src << ", OnePass dst = "
                       << dst << std::endl;

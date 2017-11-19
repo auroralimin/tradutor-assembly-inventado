@@ -7,11 +7,11 @@
 #include "Parser.hxx"
 
 /**
- * @brief Define o escopo das implementações relacionadas ao trabalho de sb
+ * @brief Define o escopo das implementações relacionadas a montagem
  */
-namespace sb {
+namespace asblr {
     /**
-     * @brief  Interface entre o Scanner e o Parser
+     * @brief Interface entre o Scanner e o Parser
      * Essa classe visa interfacear as classes Scanner e Parser bem como salvar
      * as informações necessárias durante a montagem.
      */
@@ -36,8 +36,8 @@ namespace sb {
                                 std::string src, std::string dst);
 
             /**
-             * @brief Injeção de amizade com a classe sb::Parser
-             * @relates sb::Parser
+             * @brief Injeção de amizade com a classe asblr::Parser
+             * @relates asblr::Parser
              */
             friend Parser;
 

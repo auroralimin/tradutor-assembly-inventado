@@ -34,7 +34,7 @@
  */
 #define UNUSED_VAR (void)
 
-namespace sb {
+namespace asblr {
     /**
      * @enum sp::color
      * @brief Enum para os ids das cores no cout

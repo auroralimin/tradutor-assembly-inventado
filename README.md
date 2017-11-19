@@ -96,26 +96,44 @@ Caso, não seja possível, o carregador deve indicar uma mensagem de: “OUT OF 
 Caso contrario, o carregador deve modificar a informação relativa para os enderecos corretos e colocar o codigo final (sem cabecalho),
 
 ## Como compilar
-  
+
+### Todos os executáveis no modo padrão:
+
     $ make
+
+### Todos os executáveis no modo de depuração:
+
+    $ make debug
     
+### Todos os executáveis no modo de otimização:
+
+    $ make release
+
+## Como limpar os arquivos gerados de compilação
+
+    $ make clean
+
 ## Como gerar a documentação
   
     $ make doc
-    
+
+## Como limpar os arquivos gerados de documentação
+
+    $ make clean
+
 ## Como executar
 
 ### Montador
 
-    $ ./montador [<programa>.asm]
+    $ ./assembler/montador [<programa>.asm]
 
 ### Ligador
 
-    $ ./ligador [<programa>.asm]
+    $ ./linker/ligador [<programa>.asm]
 
 ### Carregador
 
-    $ ./carregador <executável> <quantidade de chunks> [<tamanho de um chunk>] [<endereço inicial de um chunk>]
+    $ ./loader/carregador <executável> <quantidade de chunks> [<tamanho de um chunk>] [<endereço inicial de um chunk>]
 
 ## Dependências
 

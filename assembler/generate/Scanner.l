@@ -4,19 +4,19 @@
     #include "Driver.hpp"
     #include "Parser.hxx"
 
-    using token = sb::Parser::token;
+    using token = asblr::Parser::token;
     int yycolumn = 1;
 
     #undef  YY_DECL
-    #define YY_DECL int sb::Scanner::yylex(\
-                            sb::Parser::semantic_type *const lval,\
-                            sb::Parser::location_type *location)
+    #define YY_DECL int asblr::Scanner::yylex(\
+                            asblr::Parser::semantic_type *const lval,\
+                            asblr::Parser::location_type *location)
     #define yyterminate() return( token::END )
     #define YY_NO_UNISTD_H
     #define YY_USER_ACTION location->step(); location->columns(yyleng);
 %}
 
-%option yyclass="sb::Scanner"
+%option yyclass="asblr::Scanner"
 %option debug
 %option yylineno
 %option nodefault
@@ -63,7 +63,7 @@ PUBLIC                      { return token::PUBLIC;  }
 .     ;
 %%
 
-int sb::Scanner::decNum(std::string str) {
+int asblr::Scanner::decNum(std::string str) {
     yyless(str.length() - 1);
     int num = std::stoi(yytext);
     yylval->build<int>(num);
@@ -71,7 +71,7 @@ int sb::Scanner::decNum(std::string str) {
     return token::NUM;
 }
 
-int sb::Scanner::hexNum(std::string str) {
+int asblr::Scanner::hexNum(std::string str) {
     yyless(str.length() - 1);
     int num = std::stoi(yytext, 0, 16);
     yylval->build<int>(num);
@@ -79,14 +79,14 @@ int sb::Scanner::hexNum(std::string str) {
     return token::NUM;
 }
 
-int sb::Scanner::label(std::string str) {
+int asblr::Scanner::label(std::string str) {
     str = str.substr(0, str.length() - 1);
     yylval->build<std::string>(str);
 
     return token::LABEL;
 }
 
-int sb::Scanner::name(std::string str) {
+int asblr::Scanner::name(std::string str) {
     yylval->build<std::string>(str);
 
     return token::NAME;
