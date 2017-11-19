@@ -51,6 +51,8 @@
 %token               IF
 %token               BEGINC
 %token               ENDC
+%token               EXTERN
+%token               PUBLIC
 
 %token <std::string> LABEL
 %token <std::string> NAME
@@ -114,6 +116,8 @@ code
 line
     : equ end_line
     | if end_line
+    | extern end_line
+    | public end_line
     | label   end_line { driver.insertLabel($1.first, $1.second); }
     | command end_line 
     ;
@@ -131,6 +135,16 @@ if
       }
     ;
 
+extern
+    : LABEL EXTERN
+    ;
+
+public
+    : PUBLIC NAME {
+          driver.insertPublicLabel($2);
+      }
+    ;
+
 label
     : LABEL end_line command { $$ = std::make_pair($1, $3); }
     | LABEL          command { $$ = std::make_pair($1, $2); }
@@ -145,7 +159,7 @@ instruction
     : inst_name {
           if (validLine) {
               $$ = 1;
-              driver.assembler($1);
+              driver.assembler($1, false);
           } else {
               validLine = true;
           }
@@ -153,9 +167,9 @@ instruction
     | inst_name addr {
           if (validLine) {
               $$ = 2;
-              driver.assembler($1);
+              driver.assembler($1, false);
               driver.insertRef($2.first);
-              driver.assembler($2.second);
+              driver.assembler($2.second, true);
           } else {
               validLine = true;
           }
@@ -163,11 +177,11 @@ instruction
     | COPY addr COMMA addr {
           if (validLine) {
               $$ = 3;
-              driver.assembler(9);
+              driver.assembler(9, false);
               driver.insertRef($2.first);
-              driver.assembler($2.second);
+              driver.assembler($2.second, true);
               driver.insertRef($4.first);
-              driver.assembler($4.second);
+              driver.assembler($4.second, true);
           } else {
               validLine = true;
           }
@@ -202,15 +216,15 @@ directive
       }
     | SPACE {
           $$ = 1;
-          driver.assembler(0);
+          driver.assembler(0, true);
       }
     | SPACE NUM {
           $$ = $2;
-          for (int i = 0; i < $2; i++) driver.assembler(0);
+          for (int i = 0; i < $2; i++) driver.assembler(0, true);
       }
     | CONST NUM {
           $$ = 1;
-          driver.assembler($2);
+          driver.assembler($2, true);
       }
     ;
 

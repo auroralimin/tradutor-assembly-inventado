@@ -63,8 +63,10 @@ namespace sb {
              *        a montagem de algum atributo terminal do código-fonte
              *
              * @param value é um int que contém o valor numérico da montagem
+             * @param relative é um booleano que informa se o valor montado é
+             * relativo a um endereço ou a um código fixo
              */
-            void assembler(int value);
+            void assembler(int value, bool relative);
 
             /**
              * @brief Método que resolve as referências de rótulos seguindo a\
@@ -112,18 +114,32 @@ namespace sb {
 
             /**
              * @brief Imprime um erro de montagem no parser
+             *
+             * @param msg é um std::string com o corpo da mensagem de erro
              */
             void printParseError(std::string msg);
+
+            /**
+             * @brief Insere o nome de um rótulo público em um vetor
+             *
+             * @param label é um std::string com o nome do rótulo declarado\
+             * como público
+             */
+            void insertPublicLabel(std::string label);
 
             int addr;    /**< contador de endereços do montador */ 
             bool unique; /**< informa se o módulo é único ou não */ 
             std::string src; /**< nome do arquivo fonte */ 
             std::vector<int> assembly 
                 /**< contém os valores após a montagem*/;
+            std::vector<int> realocInfo 
+                /**< contém as informações de realocação*/;
             std::map<std::string, int> equMap;
             /**< contém os valores equ relacionados aos seus rótulos*/;
             std::map<std::string, int> labelMap;
-            /**< contém  informações a respeito de rótulos */
+            /**< contém informações a respeito de rótulos */
+            std::vector<std::string> publicLabel;
+            /**< contém os nomes dos rótulos que são públicos */
             std::map<std::string, std::vector<int> > refMap;
             /**< mapa de referências */
     };

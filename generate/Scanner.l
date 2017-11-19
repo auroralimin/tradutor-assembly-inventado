@@ -52,6 +52,8 @@ EQU                         { return token::EQU;     }
 IF                          { return token::IF;      }
 BEGIN                       { return token::BEGINC;  }
 END                         { return token::ENDC;    }
+EXTERN                      { return token::EXTERN;  }
+PUBLIC                      { return token::PUBLIC;  }
 [+-]*0x[0-9a-fA-F]+[ \n\t,] { return hexNum(yytext); }
 [+-]*[0-9]+[ \n\t,]         { return decNum(yytext); }
 [a-z_]+[a-z0-9_]*:          { return label(yytext);  }

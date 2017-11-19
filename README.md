@@ -57,7 +57,11 @@ Esta linguagem e formada por um conjunto de apenas 14 instruções.
                                                                         codigo somente se o valor do
                                                                         operando for 1                 </td></tr>
   <tr><td>    BEGIN   </td><td>     0     </td><td>     0    </td><td>  Início de um módulo            </td></tr>
-  <tr><td>     END    </td><td>     0     </td><td>     0    </td><td>  Fim de um módulo               </td></tr>
+  <tr><td>    END     </td><td>     0     </td><td>     0    </td><td>  Fim de um módulo               </td></tr>
+  <tr><td>    EXTERN  </td><td>     0     </td><td>     0    </td><td>  Indica que o rótulo é definido
+                                                                        em um módulo externo           </td></tr>
+  <tr><td>    PUBLIC  </td><td>     0     </td><td>     0    </td><td>  Indica que o rótulo é público
+                                                                        para outros módulos            </td></tr>
 </table>
 
 ## Especificação
