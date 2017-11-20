@@ -97,6 +97,8 @@ begin_code
                                      "mesmo NÃO deve ter as diretivas "\
                                      "BEGIN e END.");
              exit(EXIT_FAILURE);
+          } else {
+              driver.insertLabel($1, 0); 
           }
       }
     ;
@@ -216,15 +218,15 @@ directive
       }
     | SPACE NUM {
           $$ = $2;
-          for (int i = 0; i < $2; i++) driver.assembler(0, true);
+          for (int i = 0; i < $2; i++) driver.assembler(0, false);
       }
     | SPACE {
           $$ = 1;
-          driver.assembler(0, true);
+          driver.assembler(0, false);
       }
    | CONST NUM {
           $$ = 1;
-          driver.assembler($2, true);
+          driver.assembler($2, false);
       }
     ;
 

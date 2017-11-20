@@ -68,11 +68,11 @@ void asblr::Driver::writeBin(std::string dst) {
 }
 
 void asblr::Driver::insertRef(std::string label) {
-	if (DEBUG) {
-		const std::string cyan = COLOR(asblr::color::cyan);
-		std::cout << cyan << "Driver: " << OFF;
-		std::cout << "Insere Ref: " << label << " " << addr << std::endl;
-	}
+#if DEBUG
+    const std::string cyan = COLOR(asblr::color::cyan);
+    std::cout << cyan << "Driver: " << OFF;
+    std::cout << "Insere Ref: " << label << " " << addr << std::endl;
+#endif
 	refMap[label].push_back(addr);
 }
 
@@ -99,11 +99,11 @@ void asblr::Driver::solveRef() {
 }
 
 void asblr::Driver::insertLabel(std::string label, int dec) {
-	if (DEBUG) {
-		const std::string cyan = COLOR(asblr::color::cyan);
-		std::cout << cyan << "Driver: " << OFF;
-		std::cout << "Insere Label: " << label << " " << addr-dec << std::endl;
-	}
+#if DEBUG
+    const std::string cyan = COLOR(asblr::color::cyan);
+    std::cout << cyan << "Driver: " << OFF;
+    std::cout << "Insere Label: " << label << " " << addr-dec << std::endl;
+#endif
 	labelMap[label] = addr - dec;
 }
 

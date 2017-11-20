@@ -2,7 +2,7 @@
 #define LNKR_DRIVER_HPP
 
 #include <map>
-#include <string>
+#include <utility>
 #include <vector>
 
 #include "Scanner.hpp"
@@ -121,8 +121,8 @@ namespace lnkr {
 			int begin; 
 			/**< indica onde o código começa relativo aos outros módulos*/
 			int modLength; /**< indica o tamanho do módulo*/
-			std::vector<int> code; /**< contém o código ligado */
-			std::vector<bool> rllcInfo;
+			std::vector<std::pair<int, int>> code;/**< contém o código ligado */
+			std::vector<bool> reallocInfo;
 			/**< contém as informações de realocação */
 			std::map<std::string, std::vector<int> > useTable; 
 			/**< contém a tabela de usos */

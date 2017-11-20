@@ -8,7 +8,7 @@
  * @def DEBUG
  * @brief Macro que defini se o código sera compilado com prints de depuração
  */
-#define DEBUG true
+#define DEBUG false
 
 /**
  * @def BOLD

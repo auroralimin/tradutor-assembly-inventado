@@ -106,7 +106,9 @@ use_vec
 	      $2.emplace($2.begin(), $1);
 		  $$ = $2;
       }
-	| NUM 	 	  { $$ = std::vector<int>($1);	    }
+	| NUM { 
+          $$.emplace($$.begin(), $1);
+      }
 	;
 
 end_line

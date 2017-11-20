@@ -48,16 +48,16 @@ int main(int argc, char **argv) {
         }
 
         //monta arquivo
-        if (DEBUG) {
-            const std::string magenta = COLOR(asblr::color::magenta);
-            std::cout << magenta << "Main: " << OFF;
-            std::cout << "OnePass src = " << src << ", OnePass dst = "
-                      << dst << std::endl;
-        }
+#if DEBUG
+        const std::string magenta = COLOR(asblr::color::magenta);
+        std::cout << magenta << "Main: " << OFF;
+        std::cout << "OnePass src = " << src << ", OnePass dst = "
+                  << dst << std::endl;
+#endif
         driver->onePassProcess(stream, argc == 2, src, dst);
-        if (DEBUG) {
-            std::cout << std::endl;
-        }
+#if DEBUG
+        std::cout << std::endl;
+#endif
 
         stream.close();
         delete driver;

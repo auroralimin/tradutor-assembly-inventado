@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#define DEBUG false
+
 lnkr::Driver::Driver() : begin(0), modLength(0) {}
 
 void lnkr::Driver::linker(std::vector<std::string> objs,
@@ -25,7 +27,6 @@ void lnkr::Driver::parseObj(std::string src, std::istream &srcStream) {
 	lnkr::Scanner *scanner = new lnkr::Scanner(&srcStream);
 	lnkr::Parser *parser = new lnkr::Parser(*scanner, *this);
 
-	std::cout << src << " len: " << modLength << std::endl;
 	begin += modLength;
 	const int accept = 0;
 	if (parser->parse() != accept) {
@@ -39,23 +40,43 @@ void lnkr::Driver::parseObj(std::string src, std::istream &srcStream) {
 }
 
 void lnkr::Driver::solveUses() {
-    //TODO: implementar resolução de usos
+    for (auto uses : useTable) {
+        int addr = defTable.at(uses.first);
+#if DEBUG
+        std::cout << "Definições: " << uses.first << " " << addr << std::endl;
+        std::cout << "Usos: " << uses.first << " ";
+#endif
+        for (auto u : uses.second) {
+#if DEBUG
+            std::cout << u << " ";
+#endif
+            code[u].first += addr - code[u].second;
+        }
+#if DEBUG
+        std::cout << std::endl;
+#endif
+    }
 }
 
 void lnkr::Driver::writeExec(std::string dst) {
-	std::cout << "realloc info:" << std::endl;
-	for (auto r : rllcInfo)
-		std::cout << r << " ";
-	std::cout << std::endl;
+	std::ofstream out;
+	out.open(dst);
 
-	std::cout << "Código ligado sem corrigir usos:" << std::endl;
+	out << "H: " << dst << std::endl;
+	out << "H: " << begin + modLength << std::endl;
+    
+	out << "H: ";
+	for (auto r : reallocInfo)
+		out << r << " ";
+	out << std::endl;
+
+	out << "T: ";
 	for (auto c : code) {
-		std::cout << c << "  ";
+		out << c.first << " ";
 	}
-	std::cout << std::endl;
+	out << std::endl;
 
-    //TODO: escrever executável
-    (void) dst;
+	out.close();
 }
 
 void lnkr::Driver::insertUse(std::string label, std::vector<int> uses) {
@@ -77,14 +98,14 @@ void lnkr::Driver::insertCode(int n) {
 	// 					   cada modulo
 	// begin - code.size : percorrer de tras pra frente em cada 
 	// 					   modulo  
-	if (rllcInfo[(begin + modLength) + (begin - code.size()) - 1])
-		code.emplace(code.begin() + begin, n + begin);
+	if (reallocInfo[(begin + modLength) + (begin - code.size()) - 1])
+		code.emplace(code.begin() + begin, std::make_pair(n + begin, begin));
 	else 
-		code.emplace(code.begin() + begin, n);
+		code.emplace(code.begin() + begin, std::make_pair(n, begin));
 }
 
 void lnkr::Driver::insertRealloc(bool b) {
-	rllcInfo.emplace(rllcInfo.begin() + begin, b);
+	reallocInfo.emplace(reallocInfo.begin() + begin, b);
 }
 
 void lnkr::Driver::setModLength(int modLength) {
