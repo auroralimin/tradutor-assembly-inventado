@@ -105,7 +105,7 @@ void lnkr::Driver::insertCode(int n) {
 }
 
 void lnkr::Driver::insertRealloc(bool b) {
-	reallocInfo.emplace(reallocInfo.begin() + begin, b);
+	reallocInfo.insert(reallocInfo.begin() + begin, b);
 }
 
 void lnkr::Driver::setModLength(int modLength) {

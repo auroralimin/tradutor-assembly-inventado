@@ -26,10 +26,20 @@ int main(int argc, char** argv) {
 		std::cerr << "Não foi possível abrir o arquivo:" << argv[1]
 			<< "." << std::endl;
 		return EXIT_FAILURE;
-	}
+    }
 
 	ldr::Driver driver = ldr::Driver();
-	driver.loader(stream);
+    
+    int numChunk = atoi(argv[2]);
+    
+    for (int i = 3; i < numChunk + 3; i++) {
+        driver.insertChunk(std::make_pair(atoi(argv[i]),atoi(argv[i+numChunk])));
+    }
+    
+    std::string dst = argv[1];
+    dst += ".im";
+    
+	driver.loader(stream, dst);
 
 	stream.close();
 	return EXIT_SUCCESS;
