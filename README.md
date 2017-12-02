@@ -157,5 +157,11 @@ Como padrão, as variáveis, abstrações e nomes no código são em inglês, be
 A linguagem de programação utilizada é o C++ e o projeto segue diretrizes (*[Guidelines][GUIDELINES]*)
 para programar nessa linguagem feitas pelos desenvolvedores da Google.
 
+## Agradecimentos
+
+Em nossos estudos para entender o Bison e o Flex, nos deparamos com dois repositórios interessantes (*[aqui][REPO1]* e *[aqui][REPO2]*). Nesse percurso, ambos nos inspiraram e nos forneceram uma base inicial de partida. Portanto, gostaríamos de deixar aqui o nosso agradecimento aos autores desse repositórios!
+
 [GUIDELINES]: https://google.github.io/styleguide/cppguide.html
+[REPO1]: https://github.com/jonathan-beard/simple_wc_example
+[REPO2]: https://github.com/ezaquarii/bison-flex-cpp-example
 
