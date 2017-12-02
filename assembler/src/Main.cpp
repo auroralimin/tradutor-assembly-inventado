@@ -14,8 +14,11 @@
  * saída
  */
 int main(int argc, char **argv) {
+	const std::string red = COLOR(color::red);
+
     if (argc < 2) {
-        std::cerr << "É necessário especificar: [<programa>.asm]" << std::endl;
+        std::cerr << ERROR_PRINT << "Invalid arguments." << std::endl
+                  << ERROR_SPACE << "Expected: [<file name>.asm]" << std::endl;
         return EXIT_FAILURE;
     }
 
@@ -26,8 +29,8 @@ int main(int argc, char **argv) {
 
         //confere se é um arquivo asm de entrada
         if (src.rfind(asmStr) != (src.size() - asmStr.size())) {
-            std::cerr << "É necessário que o programa de entrada "
-                      << "tenha a extensão .asm" << std::endl;
+            std::cerr << ERROR_PRINT 
+                      << "Argument files should be \".asm\"." << std::endl;
             return EXIT_FAILURE;
         }
 
@@ -42,22 +45,13 @@ int main(int argc, char **argv) {
         std::ifstream stream;
         stream.open(src);
         if (!stream.good()) {
-            std::cerr << "Não foi possível abrir o arquivo:" << src
-                      << "." << std::endl;
+            std::cerr << ERROR_PRINT << "Unable to open \"" << src
+                      << "\"." << std::endl;
             return EXIT_FAILURE;
         }
 
         //monta arquivo
-#if DEBUG
-        const std::string magenta = COLOR(asblr::color::magenta);
-        std::cout << magenta << "Main: " << OFF;
-        std::cout << "OnePass src = " << src << ", OnePass dst = "
-                  << dst << std::endl;
-#endif
         driver->onePassProcess(stream, argc == 2, src, dst);
-#if DEBUG
-        std::cout << std::endl;
-#endif
 
         stream.close();
         delete driver;

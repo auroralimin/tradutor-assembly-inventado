@@ -4,6 +4,7 @@ TOPTARGETS := all debug clean release generate
 # Lista de subdiretórios
 SUBDIRS := $(wildcard */)
 SUBDIRS := $(filter-out doc/, $(SUBDIRS))
+SUBDIRS := $(filter-out shared_include/, $(SUBDIRS))
 
 # Nome do diretório na qual a documentação será gerada
 DOC_PATH = doc/

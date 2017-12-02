@@ -4,6 +4,8 @@
 
 #include "OutFormat.hpp"
 
+#define DRIVER_DEBUG false
+
 asblr::Driver::~Driver() {
 	addr = 0;
 	assembly.clear();
@@ -22,7 +24,9 @@ void asblr::Driver::onePassProcess(std::istream &srcStream, bool unique,
 	this->src = src;
 	const int accept = 0;
 	if (parser->parse() != accept) {
-		std::cerr << "Erro imprevisto na montagem." << std::endl;
+		std::cerr << ERROR_PRINT << "Unexpected assembler error." << std::endl
+                  << ERROR_SPACE << "This assembler program only handles "
+                  << "BEGIN/END directives related errors." << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
@@ -68,10 +72,10 @@ void asblr::Driver::writeBin(std::string dst) {
 }
 
 void asblr::Driver::insertRef(std::string label) {
-#if DEBUG
+#if DRIVER_DEBUG
     const std::string cyan = COLOR(asblr::color::cyan);
     std::cout << cyan << "Driver: " << OFF;
-    std::cout << "Insere Ref: " << label << " " << addr << std::endl;
+    std::cout << "Insert reference: " << label << " " << addr << std::endl;
 #endif
 	refMap[label].push_back(addr);
 }
@@ -99,10 +103,10 @@ void asblr::Driver::solveRef() {
 }
 
 void asblr::Driver::insertLabel(std::string label, int dec) {
-#if DEBUG
+#if DRIVER_DEBUG
     const std::string cyan = COLOR(asblr::color::cyan);
     std::cout << cyan << "Driver: " << OFF;
-    std::cout << "Insere Label: " << label << " " << addr-dec << std::endl;
+    std::cout << "Insert label: " << label << " " << addr-dec << std::endl;
 #endif
 	labelMap[label] = addr - dec;
 }
@@ -121,10 +125,8 @@ bool asblr::Driver::isUnique() {
 }
 
 void asblr::Driver::printParseError(std::string msg) {
-	const std::string red = COLOR(asblr::color::red);
-	std::cout << red << "Erro: " << OFF;
-	std::cout << BOLD << src << ": " << OFF;
-	std::cout << msg << std::endl;
+	std::cerr << ERROR_PRINT << BOLD << src << ": " << OFF
+	          << msg << std::endl;
 }
 
 void asblr::Driver::insertPublicLabel(std::string label) {

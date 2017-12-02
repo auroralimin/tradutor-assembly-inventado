@@ -4,7 +4,8 @@ CC = clang++
 # "Flags" para a geração automática das dependências
 DEP_FLAGS = -MT $@ -MMD -MP -MF $(DEP_PATH)/$*.d
 # Diretivas que são utilizadas na compilação de cada objeto
-DIRECTIVES = -std=c++11 -Wall -Wextra -Wno-deprecated-register -c -I $(INC_PATH)
+DIRECTIVES  = -std=c++11 -Wall -Wextra -Wno-deprecated-register -c
+DIRECTIVES += -I $(INC_PATH) -I $(SHRD_INC_PATH)
 # Diretivas que são utilizadas na "linkagem" dos objetos gerando o executável
 LIBS =
 
@@ -14,6 +15,9 @@ INC_PATH = include
 SRC_PATH = src
 BIN_PATH = bin
 DEP_PATH = dep
+
+# Caminho das bibliotecas compartilhadas
+SHRD_INC_PATH = ../shared_include
 
 # Caminho para as documentações geradas do código
 DOC_PATH = doc

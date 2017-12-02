@@ -152,7 +152,7 @@ Esse projeto necessita do compilador GCC na versão 5.x ou maior.
 ## Diretrizes do projeto
 
 O código será escrito com o padrão "Camel Case". 
-Como padrão, as variáveis, abstrações e nomes no código serão dadas em inglês e toda a documentaço será feita em português. 
+Como padrão, as variáveis, abstrações e nomes no código são em inglês, bem como as mensagens de saída. Já toda a documentação foi feita em português. 
 
 A linguagem de programação utilizada é o C++ e o projeto segue diretrizes (*[Guidelines][GUIDELINES]*)
 para programar nessa linguagem feitas pelos desenvolvedores da Google.

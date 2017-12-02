@@ -3,6 +3,7 @@
  */
 
 #include "Driver.hpp"
+#include "OutFormat.hpp"
 
 /**
  * @brief Função main que chama o ligador
@@ -12,8 +13,8 @@
  */
 int main(int argc, char** argv) {
 	if (argc < 2) {
-		std::cerr << "Deve ser informado ao menos um objeto"
-				  << "a ser ligado" << std::endl;
+        std::cerr << ERROR_PRINT << "Invalid arguments." << std::endl
+                  << ERROR_SPACE << "Expected: [<object name>.o]" << std::endl;
 		return EXIT_FAILURE;
 	}
 	

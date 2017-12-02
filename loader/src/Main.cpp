@@ -2,9 +2,10 @@
  * @file
  */
 
-#include "Driver.hpp"
-
 #include <fstream>
+
+#include "Driver.hpp"
+#include "OutFormat.hpp"
 
 bool isInt(std::string str);
 
@@ -17,9 +18,10 @@ bool isInt(std::string str);
  */
 int main(int argc, char** argv) {
     if ((argc < 5) || ((isInt(argv[2])) && (argc < atoi(argv[2])*2 + 3))) {
-        std::cerr << "Deve ser informado: <executável> <quantidade de chunks> "
-                  << "[<tamanho de cada chunk>] "
-                  << "[<endereço inicial de cada chunk>]" << std::endl;
+        std::cerr << ERROR_PRINT << "Invalid arguments." << std::endl
+                  << ERROR_SPACE << "Expected: <executable> <number of chunks> "
+                  << "[<size of each chunk>] "
+                  << "[<initial address of each chunk>]" << std::endl;
         return EXIT_FAILURE;
     } 
 
@@ -27,15 +29,16 @@ int main(int argc, char** argv) {
     std::ifstream stream;
     stream.open(argv[1]);
     if (!stream.good()) {
-        std::cerr << "Não foi possível abrir o executável: " << argv[1]
-            << "." << std::endl;
+        std::cerr << ERROR_PRINT << "Unable to open \"" << argv[1] << "\"."
+                  << std::endl;
         return EXIT_FAILURE;
     }
 
     for (int i = 3; i < argc; i++) {
         if (!isInt(argv[i])) {
-            std::cerr << "Todos os argumentos relacionados aos chunks devem "
-                      << "ser números." << std::endl;
+            std::cerr << ERROR_PRINT << "Invalid arguments." << std::endl
+                      << ERROR_SPACE << "All chunk related arguments should "
+                      << "be integers." << std::endl;
         return EXIT_FAILURE;
         }
     }
@@ -44,7 +47,8 @@ int main(int argc, char** argv) {
 
     int numChunk = atoi(argv[2]);
     for (int i = 3; i < numChunk + 3; i++) {
-        driver.insertChunk(std::make_pair(atoi(argv[i]),atoi(argv[i+numChunk])));
+        driver.insertChunk(std::make_pair(atoi(argv[i]),
+                                          atoi(argv[i + numChunk])));
     }
 
     std::string dst = argv[1];

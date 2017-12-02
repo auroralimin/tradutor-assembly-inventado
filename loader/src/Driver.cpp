@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+#include "OutFormat.hpp"
+
 ldr::Driver::Driver() : acc(0) {}
 
 void ldr::Driver::loader(std::istream &stream, std::string dst){
@@ -9,7 +11,10 @@ void ldr::Driver::loader(std::istream &stream, std::string dst){
     ldr::Parser *parser = new ldr::Parser(*scanner, *this);
     
     if (parser->parse()) {
-        std::cerr << "Erro imprevisto no carregador" << std::endl;
+		std::cerr << ERROR_PRINT << "Unexpected error while parsing executable."
+                  << std::endl
+                  << ERROR_SPACE << "It doesn't follow the patterns expected "
+                  << "by this loader program. " << std::endl;
         exit(EXIT_FAILURE);
     }
     
@@ -46,13 +51,14 @@ void ldr::Driver::reallocCode() {
             if (*c_it < chunk->first + acc) {
                 *c_it += chunk->second - acc;
                 break;
-            }else {
+            } else {
                 acc += chunk->first;
             }
         }
         
         if (chunk == chunkInfo.end()) {
-            std::cout << "OUT OF MEMORY - YOUR PROGRAM WILL NOT BE LOADED."
+            std::cerr << ERROR_PRINT
+                      << "OUT OF MEMORY - YOUR PROGRAM WILL NOT BE LOADED."
                       << std::endl;
             exit(EXIT_FAILURE);
         }

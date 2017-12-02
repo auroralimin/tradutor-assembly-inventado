@@ -2,7 +2,9 @@
 
 #include <fstream>
 
-#define DEBUG false
+#include "OutFormat.hpp"
+
+#define DRIVER_DEBUG false
 
 lnkr::Driver::Driver() : begin(0), modLength(0) {}
 
@@ -12,8 +14,8 @@ void lnkr::Driver::linker(std::vector<std::string> objs,
 		std::ifstream stream;
 		stream.open(src);
 		if (!stream.good()) {
-			std::cerr << "Não foi possível abrir o arquivo:" << src
-				<< "." << std::endl;
+            std::cerr << ERROR_PRINT << "Unable to open \"" << src
+                      << "\"." << std::endl;
 			exit(EXIT_FAILURE);
 		}
 		parseObj(src, stream);
@@ -30,8 +32,10 @@ void lnkr::Driver::parseObj(std::string src, std::istream &srcStream) {
 	begin += modLength;
 	const int accept = 0;
 	if (parser->parse() != accept) {
-		std::cerr << "Erro imprevisto no parse do objeto "
-		     	  << src << "." << std::endl;
+		std::cerr << ERROR_PRINT << "Unexpected error while parsing object."
+                  << std::endl
+                  << ERROR_SPACE << "\"" << src << "\" doesn't follow the "
+                  << "patterns expected by this linker program. " << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
@@ -42,17 +46,17 @@ void lnkr::Driver::parseObj(std::string src, std::istream &srcStream) {
 void lnkr::Driver::solveUses() {
     for (auto uses : useTable) {
         int addr = defTable.at(uses.first);
-#if DEBUG
-        std::cout << "Definições: " << uses.first << " " << addr << std::endl;
-        std::cout << "Usos: " << uses.first << " ";
+#if DRIVER_DEBUG
+        std::cout << "Definitions: " << uses.first << " " << addr << std::endl;
+        std::cout << "Uses: " << uses.first << " ";
 #endif
         for (auto u : uses.second) {
-#if DEBUG
+#if DRIVER_DEBUG
             std::cout << u << " ";
 #endif
             code[u].first += addr - code[u].second;
         }
-#if DEBUG
+#if DRIVER_DEBUG
         std::cout << std::endl;
 #endif
     }
