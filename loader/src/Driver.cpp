@@ -2,8 +2,6 @@
 
 #include <fstream>
 
-#define DEBUG false
-
 ldr::Driver::Driver() : acc(0) {}
 
 void ldr::Driver::loader(std::istream &stream, std::string dst){
@@ -29,7 +27,6 @@ bool ldr::Driver::compareChunk(std::pair<int,int> &x, std::pair<int,int> &y) {
 }
 
 void ldr::Driver::reallocCode() {
-    
     std::sort (chunkInfo.begin(), chunkInfo.end(), compareChunk);
     std::vector<int>::iterator c_it;
     std::vector<bool>::iterator r_it;
@@ -55,15 +52,14 @@ void ldr::Driver::reallocCode() {
         }
         
         if (chunk == chunkInfo.end()) {
-            std::cout << "OUT OF MEMORY - YOUR PROGRAM WILL NOT BE LOADED" << std::endl;
+            std::cout << "OUT OF MEMORY - YOUR PROGRAM WILL NOT BE LOADED."
+                      << std::endl;
             exit(EXIT_FAILURE);
         }
-        
     }
 }
 
 void ldr::Driver::writeOutput(std::string dst) {
-    
     std::ofstream out;
     out.open(dst);
     
@@ -75,9 +71,8 @@ void ldr::Driver::writeOutput(std::string dst) {
 }
 
 void ldr::Driver::simulator() {
-    
     std::vector<int> codeAux(code);
-    
+   
     for (unsigned long pc = 0; pc < codeAux.size(); pc++) {
         switch (codeAux[pc]) {
             case 1: // ADD:

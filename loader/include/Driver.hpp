@@ -10,7 +10,7 @@
 #include "Parser.hxx"
 
 /**
- * @brief Define o escopo das implementações relacionadas a ligação
+ * @brief Define o escopo das implementações relacionadas ao carregamento
  */
 namespace ldr {
     /**
@@ -67,51 +67,52 @@ namespace ldr {
         void parseObj(std::string src, std::istream &srcStream);
         
         /**
-         *	@brief Insere um elemento do código ligado à uma abstração
+         * @brief Insere um elemento do código ligado à uma abstração
          *
-         *	@param n é um inteiro contendo a parte do código a ser\
-         *				 ligado
+         * @param n é um inteiro contendo a parte do código a ser\
+         *        ligado
          */
         void insertCode(int n);
         
         /**
-         *	@brief Insere uma informação de realocação
+         * @brief Insere uma informação de realocação
          *
-         *	@param b é boleano que informa se a informação é relativa ou não
+         * @param b é boleano que informa se a informação é relativa ou não
          */
         void insertRealloc(bool b);
         
         /**
-         *	@brief Seta o tamanho do código do módulo passando pelo parser
+         * @brief Seta o tamanho do código do módulo passando pelo parser
          *
-         *	@param modLength é um inteiro que informa o tamanho do módulo
+         * @param modLength é um inteiro que informa o tamanho do módulo
          */
         void setModLength(int modLength);
         
         /**
-         *    @brief Realoca os endereços de memória relativos de acordo com o chunk
+         * @brief Realoca os endereços de memória relativos de acordo com\
+         *        o chunk
          */
         void reallocCode();
         
         /**
-         *    @brief Escreve o código com os endereços de memória\
-         *    realocados em um arquivo
-         *    @param dst nome do arquivo de saída
+         * @brief Escreve o código com os endereços de memória\
+         *        realocados em um arquivo
+         * @param dst é ums std::string com o nome do arquivo de saída
          */
         void writeOutput(std::string dst);
         
         /**
-         *    @brief Auxilia na ordenação da abstração de chunk
-         *    @param x primeiro elemento
-         *    @param y segundo elemento
+         * @brief Auxilia na ordenação da abstração de chunk
+         * @param x é um std::pair<int, int> contendo o primeiro elemento
+         * @param y é um std::pair<int, int> contendo o segundo elemento
          */
         static bool compareChunk(std::pair<int,int> &x, std::pair<int,int> &y);
         
         int acc; /**< acumulador usado na simulação*/
         int modLength; /**< indica o tamanho do módulo*/
-        std::vector<int> code;/**< contém o código carregado */
-        std::vector<bool> reallocInfo;/**< contém as informações de realocação */
-        std::vector<std::pair<int, int>> chunkInfo; /**< informação de chunk */
+        std::vector<int> code;/**< contém o código carregado*/
+        std::vector<bool> reallocInfo;/**< contém as informações de realocação*/
+        std::vector<std::pair<int, int>> chunkInfo; /**< informação de chunk*/
     };
 }
 

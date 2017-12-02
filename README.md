@@ -88,12 +88,12 @@ O arquivo executável não deve ter extensão e deve conter um cabeçalho cobteb
 Recebe como entrada o arquivo executável gerado pelo ligador e uma sequência de números.
 Nessa sequência de números, o primeiro representa a quantidade de chunks, os próximos indicam o tamanho em bytes de cada chunk e os últimos os endereços iniciais de cada chunk.
 
-Assim, o carregador deve simular a execução do programa e gerar um arquivo de saída de imagem de memória.
+Assim, o carregador deve simular a execução do programa e depois tentar gerar um arquivo de saída de imagem de memória.
 Para gerar esse arquivo leva-se em conta a sequência de números descrita acima.
 Cabe ao carregador verificar se um desses chunks é suficiente para suportar o programa inteiro.
 Se não for, deve-se verificar se ́e possıvel entao dividir o programa em diferentes chunks.
 Caso, não seja possível, o carregador deve indicar uma mensagem de: “OUT OF MEMORY - YOUR PROGRAM WILL NOT BE LOADED”.
-Caso contrario, o carregador deve modificar a informação relativa para os enderecos corretos e colocar o codigo final (sem cabecalho),
+Caso contrario, o carregador deve modificar a informação relativa para os enderecos corretos e colocar o codigo final (sem cabecalho) em um arquivo com extensão ".im".
 
 ## Como compilar
 
@@ -133,7 +133,7 @@ Caso contrario, o carregador deve modificar a informação relativa para os ende
 
 ### Carregador
 
-    $ ./loader/carregador <executável> <quantidade de chunks> [<tamanho de um chunk>] [<endereço inicial de um chunk>]
+    $ ./loader/carregador <executável> <quantidade de chunks> [<tamanho de cada chunk>] [<endereço inicial de cada chunk>]
 
 ## Dependências
 
