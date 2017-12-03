@@ -82,9 +82,9 @@ module
     | end_line begin_code code end
     | code {
            if (!driver.isUnique()) {
-              driver.printParseError("Se 2 ou 3 programas sao definidos pelo "\
-                                     "usuário como entrada entao as diretivas "\
-                                     "BEGIN e END são obrigatorias.");
+              driver.printParseError("When providing 2 or 3 source files as \
+                                      arguments, it is mandatory to use \
+                                      BEGIN/END directives in all of them.");
              exit(EXIT_FAILURE);
           }
       }
@@ -93,9 +93,9 @@ module
 begin_code
     : LABEL BEGINC end_line {
           if (driver.isUnique()) {
-              driver.printParseError("Se um ́unico programa foi colocado o "\
-                                     "mesmo NÃO deve ter as diretivas "\
-                                     "BEGIN e END.");
+              driver.printParseError("When providing only one source file as \
+                                     argument, it is mandatory to not use \
+                                     BEGIN/END directives in the code.");
              exit(EXIT_FAILURE);
           } else {
               driver.insertLabel($1, 0); 
